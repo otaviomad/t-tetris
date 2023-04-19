@@ -46,8 +46,6 @@ const onMount = () => {
 const onTick = () => {
   const { piece, gameSpeed } = getGameState();
 
-  console.log(piece);
-
   if (!piece) return;
 
   if (!hasTimer(UPDATE_POS_TIMER)) {

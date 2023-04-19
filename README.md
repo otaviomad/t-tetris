@@ -1,6 +1,6 @@
 # t-tetris
 
-this is a Tetris clone that runs on your terminal built with node.
+this is a tetris clone that runs on your terminal built with node.
 
 absolutely no code here is to be taken seriously, it was all made for fun, so please don't mind the weird organistaion of the code :)
 
@@ -12,5 +12,5 @@ to play, install dependencies and run the play script:
 
 ```bash
 npm install
-npm run play
+npm run play --silent
 ```
