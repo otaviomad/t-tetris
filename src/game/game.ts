@@ -5,6 +5,7 @@ import { CLEAN_BOARD, GameBoard } from "./board";
 import { PIECES, PIECE_ROTATIONS, PieceType } from "./pieces";
 
 const UPDATE_POS_TIMER = "update-pos-timer";
+const LOCK_DELAY_TIMER = "lock-delay-timer";
 
 type XY = {
   x: number;
@@ -85,11 +86,11 @@ const updateBoard = () => {
 
 const clearLines = () => {
   setGameState((draft) => {
-    for (const key in draft.board) {
-      const line = draft.board[key];
+    for (const key in draft.staticBoard) {
+      const line = draft.staticBoard[key];
       if (line.every((cell) => cell === 1)) {
-        draft.board.splice(Number(key), 1);
-        draft.board.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+        draft.staticBoard.splice(Number(key), 1);
+        draft.staticBoard.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
       }
     }
   });
@@ -203,6 +204,7 @@ const moveLaterally = (direction: "left" | "right") => {
 export const moveVertically = () => {
   const { piece, staticBoard, lockDelay } = getGameState();
   stopTimer(UPDATE_POS_TIMER);
+  stopTimer(LOCK_DELAY_TIMER);
 
   if (!piece) return;
 
@@ -219,7 +221,7 @@ export const moveVertically = () => {
     return lockPiece();
   }
 
-  if (!hasTimer("lock-piece")) setTimer("lock-piece", 30, lockPiece);
+  if (!hasTimer("lock-piece")) setTimer(LOCK_DELAY_TIMER, 30, lockPiece);
 };
 
 const rotate = (direction: "left" | "right") => {
